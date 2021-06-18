@@ -6,7 +6,10 @@
     "@formatjs/intl-relativetimeformat": "7.x",
     "@material-ui/core": "4.x",
     "@material-ui/icons": "4.x",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@react-firebase/auth": "^0.2.10",
     "base-shell": "1.x",
+    "firebase": "^8.6.7",
     "github-markdown-css": "4.x",
     "intl": "1.x",
     "intl-locales-supported": "1.x",
@@ -20,10 +23,12 @@
     "react-intl": "5.x",
     "react-ios-pwa-prompt": "1.x",
     "react-markdown": "5.x",
+    "react-redux": "^7.2.4",
     "react-router-dom": "5.x",
     "react-scripts": "4.0.3",
     "react-virtualized-auto-sizer": "1.x",
-    "react-window": "1.x"
+    "react-window": "1.x",
+    "redux": "^4.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

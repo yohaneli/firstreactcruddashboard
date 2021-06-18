@@ -1,10 +1,16 @@
 import Page from 'material-ui-shell/lib/containers/Page'
-import React from 'react'
+import React, {useContext} from 'react'
 import Scrollbar from 'material-ui-shell/lib/components/Scrollbar/Scrollbar'
 import { useIntl } from 'react-intl'
+import { FirebaseContext } from 'components/Firebase'
 
 const HomePage = () => {
-  const intl = useIntl()
+
+  const firebase = useContext(FirebaseContext);
+
+  const intl = useIntl();
+
+  console.log("Firebase : ",firebase);
 
   return (
     <Page pageTitle={intl.formatMessage({ id: 'home' })}>

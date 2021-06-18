@@ -18,6 +18,7 @@ import { useFilter } from 'material-ui-shell/lib/providers/Filter'
 import { useIntl } from 'react-intl'
 import { useTheme as useAppTheme } from 'material-ui-shell/lib/providers/Theme'
 
+
 const filterName = 'test_filter'
 
 const CustomScrollbars = ({ onScroll, forwardedRef, style, children }) => {

@@ -170,7 +170,7 @@ const MyAccount = () => {
         {
           <ImgageUploadDialog
             isOpen={isImageDialogOpen}
-            isOpen={isImageDialogOpen}
+            //isOpen={isImageDialogOpen}
             handleClose={() => setImageDialogOpen(false)}
             handleCropSubmit={handleImageChange}
           />

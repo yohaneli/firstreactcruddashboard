@@ -141,7 +141,25 @@ const getMenuItems = (props) => {
           visible: isAuthorised,
           primaryText: intl.formatMessage({
             id: 'list_page_demo_menu',
-            defaultMessage: 'List Page',
+            defaultMessage: 'Menu',
+          }),
+          leftIcon: <ViewList />,
+        },
+        {
+          value: '/list_page_menu',
+          visible: isAuthorised,
+          primaryText: intl.formatMessage({
+            id: 'list_page_menu',
+            defaultMessage: 'List Menu',
+          }),
+          leftIcon: <ViewList />,
+        },
+        {
+          value: '/list_page_product',
+          visible: isAuthorised,
+          primaryText: intl.formatMessage({
+            id: 'list_page_product',
+            defaultMessage: 'List Product',
           }),
           leftIcon: <ViewList />,
         },

@@ -13,6 +13,8 @@ const DialogDemo = lazy(() => import('../pages/DialogDemo/DialogDemo'))
 const ToastDemo = lazy(() => import('../pages/ToastDemo/ToastDemo'))
 const FilterDemo = lazy(() => import('../pages/FilterDemo'))
 const ListPageDemo = lazy(() => import('../pages/ListPageDemo'))
+const ListMenu = lazy(() => import('../pages/ListMenu'))
+const ListProduct = lazy(() => import('../pages/ListProduct'))
 const TabsDemo = lazy(() => import('../pages/TabsDemo'))
 const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'))
 
@@ -32,6 +34,8 @@ const routes = [
   <AuthorizedRoute path="/toast_demo" exact component={ToastDemo} />,
   <AuthorizedRoute path="/filter_demo" exact component={FilterDemo} />,
   <AuthorizedRoute path="/list_page_demo" exact component={ListPageDemo} />,
+  <AuthorizedRoute path="/list_page_menu" exact component={ListMenu} />,
+  <AuthorizedRoute path="/list_page_product" exact component={ListProduct} />,
   <AuthorizedRoute path="/tabs_demo" exact component={TabsDemo} />,
 ]
 

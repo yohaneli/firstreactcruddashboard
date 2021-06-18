@@ -7,37 +7,34 @@ import Divider from '@material-ui/core/Divider'
 import { useIntl } from 'react-intl'
 
 import list from './data.json'
-import { IconButton } from '@material-ui/core'
-import { Add } from '@material-ui/icons'
+// import { IconButton } from '@material-ui/core'
+// import { Add } from '@material-ui/icons'
 
 const fields = [
+  {
+    name: 'id',
+    label: 'id',
+  },
   {
     name: 'name',
     label: 'Name',
   },
   {
-    name: 'email',
-    label: 'E-Mail',
+    name: 'description',
+    label: 'description',
   },
   {
-    name: 'amount',
-    label: 'Amount',
-    type: 'number',
-  },
-  {
-    name: 'isActive',
-    label: 'Active',
-    type: 'bool',
-  },
-  {
-    name: 'registered',
-    label: 'Registered',
-    type: 'date',
-  },
-  {
-    name: 'registrationTime',
-    label: 'Registration time',
-    type: 'time',
+    name: 'image',
+    label: 'image',
+  },{
+    name: 'price',
+    label: 'price',
+  },{
+    name: 'description',
+    label: 'description',
+  },{
+    name: 'description',
+    label: 'description',
   },
 ]
 
