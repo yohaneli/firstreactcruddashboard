@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 // usedispatch permet d'ecrire ou de dispatcher
 import {affMenu} from 'redux/actions/menu';
+import menu from 'redux/reducers/menu'
 
 
 const fields = [
@@ -40,8 +41,13 @@ const fields = [
 
 const Row = ({ index, style, data }) => {
 
+  // use selector sert a lire les données du reducer
   
-  const {menu : {affModalMenu}} = useSelector(state => state);
+  const {menu : {affModalMenu,loadingMenus}} = useSelector(state => state);
+
+  console.log(loadingMenus);
+
+  //console.log("menu 1",menu,affModalMenu,listMenus);
   
   const { id , name , position = "" , image} = data
 
@@ -51,6 +57,8 @@ const Row = ({ index, style, data }) => {
     console.log(data);
     dispatchMenu(affMenu({affModalMenu : !affModalMenu,data}))
   }
+
+ 
   
 
   return (
@@ -58,7 +66,7 @@ const Row = ({ index, style, data }) => {
       <ListItem alignItems="space-between" flexDirection="column" style= {{marginTop:10,marginBottom:10}}>
         { (image !== 'nc' && image !== undefined) && <Avatar alt={name} src={image} style={{marginRight:20}} />}
         <ListItemText
-          primary={`${name} - Position : ${position}`}
+          primary={`${name} - Position : ${position} `}
         />
         <IconButton aria-label="delete" onClick={openEdit}>
           <DescriptionOutlined fontSize="large"/>
@@ -112,58 +120,64 @@ const PageListMenu = ({listMenu}) => {
 
 const ListMenu = () => {
 
-  const {queryMenus} = useContext(FirebaseContext);
+  const {menu : {listMenus,loadingMenus}} = useSelector(state => state);
 
-  const [open, setOpen] = useState(false);
+  //console.log(loadingMenus);
+  
+  //const [loading, setLoading] = useState(false);
 
-  //console.log(queryMenus);
+  // const {queryMenus} = useContext(FirebaseContext);
 
-  const [listMenu, setMenu] = useState([]);
+  // const [open, setOpen] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  // //console.log(queryMenus);
+
+  // const [listMenu, setMenu] = useState([]);
+
+  // const [loading, setLoading] = useState(false);
 
   //console.log(queryOneMenu);
 
-  useEffect(() => {
-    setLoading(true);
-    queryMenus().onSnapshot(data => {
-      //console.log(" data :",data);
-      //console.log(" DATA EMPTY",data.empty)
-      //console.log("type du snapshot : ",data,data.val)
-      let tempListMenu=[];
+  // useEffect(() => {
+  //   setLoading(true);
+  //   queryMenus().onSnapshot(data => {
+  //     //console.log(" data :",data);
+  //     //console.log(" DATA EMPTY",data.empty)
+  //     //console.log("type du snapshot : ",data,data.val)
+  //     let tempListMenu=[];
 
-      !data.empty && data.forEach(item => {
-        //console.log(" item : ",item.data().name);
-        tempListMenu.push({ id:item.id , ...item.data()})
-      })
-      setTimeout(() => {
-        setLoading(false);
-        setMenu(tempListMenu);
-      },1000)
+  //     !data.empty && data.forEach(item => {
+  //       //console.log(" item : ",item.data().name);
+  //       tempListMenu.push({ id:item.id , ...item.data()})
+  //     })
+  //     setTimeout(() => {
+  //       setLoading(false);
+  //       setMenu(tempListMenu);
+  //     },1000)
       
 
-    })
-    //setLoading(true)
-    // setTimeout(() => {setLoading(false);
-    //  setMenu([{
-    //    "name":"Dope",
-    //    "position":1
-    //  },{
-    //   "name":"Boy",
-    //   "position":2
-    // }
-    // ])},5000)
-    return () => {
-    }
-  }, [])
+  //   })
+  //   //setLoading(true)
+  //   // setTimeout(() => {setLoading(false);
+  //   //  setMenu([{
+  //   //    "name":"Dope",
+  //   //    "position":1
+  //   //  },{
+  //   //   "name":"Boy",
+  //   //   "position":2
+  //   // }
+  //   // ])},5000)
+  //   return () => {
+  //   }
+  // }, [])
 
 
   return (      
         <Fragment>
           <EditModal/>
           {
-         !loading && listMenu.length>0? <PageListMenu listMenu={listMenu}/> :
-         <InfoChargement message={"Loading"} loading={loading}/>
+         !loadingMenus && listMenus.length>0? <PageListMenu listMenu={listMenus}/> :
+         <InfoChargement message={"Loading"} loading={loadingMenus}/>
           }
          </Fragment>
         

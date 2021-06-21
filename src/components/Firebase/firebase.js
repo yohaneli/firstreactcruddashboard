@@ -38,17 +38,28 @@ const config = {
     user = uid => this.db.doc(`users/${uid}`);
 
     // affiche les menus
+
     queryMenus = () => this.db.collection("menu").orderBy('position','desc').limitToLast(10);
+
+    //selectionne un menu
 
     queryOneMenu = (id) => this.db.collection("menu").doc(id);
 
     //queryTestMethodeCreate = () => this.db.collection("menu").doc();
 
+    //ajouter un menu
+
     queryAddMenu = (name,position) => this.db.collection("menu").add(name,position);
 
+    //selectionne tous les produits
+
     queryProducts = () => this.db.collection("produits").orderBy('name','asc').limitToLast(7);
+
+    //selectionne un produit
     
     queryOneProduct = (id) => this.db.collection("produits").doc(id);
+
+    //ajouter un produit
 
     queryAddProduct = (name,description,price) => this.db.collection("produits").add(name,description,price);
 

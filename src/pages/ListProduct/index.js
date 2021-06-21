@@ -42,12 +42,18 @@ const Row = ({ index, style, data }) => {
 
   const dispatchProduct = useDispatch();
 
+  const checkPrice = "Prix non défini";
+
   const openEditModalProduct = () => {
 
     console.log(data);
 
     dispatchProduct(affProduct({affModalProduct : !affModalProduct,data}))
 
+  }
+
+  const affichagePrix = (price) => {
+    return (price !== undefined) ? `Prix - ${price}€`: "Pas de prix défini"
   }
 
   return (
@@ -59,7 +65,8 @@ const Row = ({ index, style, data }) => {
       { (image !== 'nc' && image !== undefined) && <Avatar alt={name} src={image} style={{marginRight:20}} />}
 
         <ListItemText
-          primary={`Nom du produit : ${name} - Description : ${description} - Prix du produit : ${price} €`}
+          primary={`Nom du produit : ${name} - Description : ${description} ${affichagePrix(price)}`}
+          // secondary={(price == undefined) && `${checkPrice}`:`- Prix du produit : ${price} €`}
         />
       <IconButton aria-label="delete" onClick={openEditModalProduct}>
           <DescriptionOutlined fontSize="large"/>

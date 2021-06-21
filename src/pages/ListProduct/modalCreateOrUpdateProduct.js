@@ -8,8 +8,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
-import SaveIcon from '@material-ui/icons/SaveAlt';
-import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import { FirebaseContext } from 'components/Firebase';
 import { useSelector } from 'react-redux';
@@ -17,7 +15,6 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 // usedispatch permet d'ecrire ou de dispatcher
 import {affProduct} from 'redux/actions/product';
-import { useSnackbar } from 'notistack';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -49,52 +46,45 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-  const affSnackBar = (enqueueSnackbar,msg) => {
-
-    enqueueSnackbar(msg, {
-        variant: 'info',
-        anchorOrigin: {
-        vertical: 'top',
-        horizontal: 'center',
-        },
-    })
-      
-}
 
   const ModalCreateOrUpdateProduct = () => {
 
     // On va chercher le context sur lequel on va travailler + déstructuring pour utiliser la réquete voulue
 
-    const {queryAddProduct,queryOneProduct,queryMenus} = useContext(FirebaseContext);
+    const {queryAddProduct,queryOneProduct} = useContext(FirebaseContext);
   
     //console.log(queryMenus);
 
-    const [dataMenu, setDataMenu] = React.useState(null)
+    //const [dataMenu, setDataMenu] = React.useState(null)
 
-    useEffect(() => {
-        queryMenus().get().then(snapshot => {
+    // useEffect(() => {
+    //     queryMenus().get().then(snapshot => {
 
-            let dataMenus = snapshot.docs.map(menu => {
+    //         let dataMenus = snapshot.docs.map(menu => {
     
-                return(
-                    {id: menu.id, ...menu.data()})
+    //             return(
+    //                 {id: menu.id, ...menu.data()})
     
                     
-                })
+    //             })
                 
-                setDataMenu(dataMenus);
+    //             setDataMenu(dataMenus);
     
-        })
-        return () => {
+    //     })
+    //     return () => {
             
-        }
-    }, [])
+    //     }
+    // }, [])
 
     //console.log(queryAddProduct,queryOneProduct);
 
     const classes = useStyles();
   
-    const {product : {affModalProduct,data}} = useSelector(state => state);
+    const {product,menu} = useSelector(state => state);
+
+    const {affModalProduct,data} = product;
+
+    const {listMenus} = menu;
   
     let id = "";
   
@@ -106,7 +96,9 @@ const useStyles = makeStyles((theme) => ({
 
     let dateAdd = "";
   
-    let titleModal = "Création d'un nouveau produit"
+    let titleModal = "Création d'un nouveau produit";
+
+    let menuId = "";
   
     if (data !== null) {
       id = data.id;
@@ -115,6 +107,7 @@ const useStyles = makeStyles((theme) => ({
       price = data.price;
       dateAdd = Date.now();
       titleModal = "Modification d'un produit "
+      menuId = data?.menu;
     }
     
     /*
@@ -126,11 +119,11 @@ const useStyles = makeStyles((theme) => ({
   
     */
   
-    console.log(affModalProduct);
+    //console.log(affModalProduct);
   
     const dispatchProduct = useDispatch();
   
-    const [openModalProduct, setOpenModalProduct] = React.useState(false);
+    //const [openModalProduct, setOpenModalProduct] = React.useState(false);
   
     const [openSpeedDial, setOpenSpeedDial] = React.useState(false);
   
@@ -139,10 +132,12 @@ const useStyles = makeStyles((theme) => ({
     const [valueDescription, setValueDescription] = React.useState(description);
 
     const [valuePrice, setValuePrice] = React.useState(price);
+
+    const [valueSelect, setValueSelect] = React.useState()
   
     const onChangeName = (e) => {
 
-      console.log(e.target.value);
+      //console.log(e.target.value);
 
       (e.target.value != undefined) && setValueName(e.target.value);
 
@@ -150,7 +145,7 @@ const useStyles = makeStyles((theme) => ({
   
     const onChangeDescription = (e) => {
 
-        console.log(e.target.value);
+        //console.log(e.target.value);
 
         (e.target.value != undefined) && setValueDescription(e.target.value);
 
@@ -158,15 +153,21 @@ const useStyles = makeStyles((theme) => ({
     
     const onChangePrice = (e) => {
 
-        console.log(e.target.value);
+        //console.log(e.target.value);
 
         (e.target.value != undefined) && setValuePrice(e.target.value);
 
     }
+
+    const handleSelectMenu = (e) => {
+      console.log(e.target.value);
+      (e.target.value != undefined) && setValueSelect(e.target.value);
+    }
   
       const createProduct = async () => {
 
-          console.log("save",id,valueName,valueDescription,valuePrice);
+          //console.log("save",id,valueName,valueDescription,valuePrice);
+          
 
           if (data != null) {
 
@@ -174,12 +175,13 @@ const useStyles = makeStyles((theme) => ({
               name:valueName,
               description:valueDescription,
               price:valuePrice,
-              dateAdd : Date.now()
+              dateAdd : Date.now(),
+              menuId:valueSelect
             })
 
           } else {
 
-            queryAddProduct({image:"nc",name:valueName,description:valueDescription,price:valuePrice,dateAdd : Date.now()})
+            queryAddProduct({image:"nc",name:valueName,description:valueDescription,price:valuePrice,dateAdd : Date.now(),menuId:valueSelect})
 
           }
   
@@ -266,8 +268,9 @@ const useStyles = makeStyles((theme) => ({
                             id="demo-customized-select"
                             value="Age"
                             fullWidth={true}
+                            onChange={handleSelectMenu}
                             >
-                                {(dataMenu != null) && dataMenu.map(item => (<MenuItem key={item.id} value={item.id}> <em>{item.name}</em> </MenuItem>) )}
+                                {(listMenus != null) && listMenus.map(item => (<MenuItem key={item.id} value={item.id}> <em>{item.name}</em> </MenuItem>) )}
                         
 
                         </Select>

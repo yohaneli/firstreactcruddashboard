@@ -2,13 +2,15 @@
 
 // On importe une action
 
-import { AFF_MODAL_MENU } from "../actions/types";
+import { AFF_MODAL_MENU,CHANGE_DATA_MENU,LOADING_MENU } from "../actions/types";
 
 // initialisation du state du reducer
 
 const initStateMenu = {
     affModalMenu:false,
-    data:null
+    data:null,
+    listMenus:[],
+    loadingMenus:false
 }
 
 // la fonction du reducer avec 2 parametres le state et 'action
@@ -17,9 +19,14 @@ const menu = (state=initStateMenu,action) => {
     console.log("------ REDUCER MENU : -------",state,action.dataReturned)
     switch (action.type) {
         case AFF_MODAL_MENU:
-            return action.dataReturned;
+            return {...state,...action.dataReturned};
             break;
-    
+        case CHANGE_DATA_MENU:
+            return {...state, listMenus:action.dataReturned} ;
+            break;
+        case LOADING_MENU:
+            return {...state, loadingMenus:action.dataReturned} ;
+            break;
         default:
             return state;
             break;
